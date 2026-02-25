@@ -39,7 +39,10 @@ async fn main() -> Result<()> {
         .context("Не знайдено або пошкоджено файл Settings.toml")?;
 
     let config: Config = settings.try_deserialize()?;
-    info!("Конфігурація завантажена: {} агентів", config.swarm.total_agents);
+    info!(
+        "Конфігурація завантажена: {} агентів",
+        config.swarm.total_agents
+    );
 
     // 3. Ініціалізація каналів (Coordinator setup)
     // Broadcast для розсилки команд всім агентам
@@ -85,7 +88,10 @@ async fn main() -> Result<()> {
     while let Ok(Some(Message::StatusReport(id, state, pos))) =
         tokio::time::timeout(Duration::from_secs(2), status_rx.recv()).await
     {
-        info!("Отримано статус: Агент {} у стані {:?} на координатах ({}, {})", id, state, pos.x, pos.y);
+        info!(
+            "Отримано статус: Агент {} у стані {:?} на координатах ({}, {})",
+            id, state, pos.x, pos.y
+        );
         reports_collected += 1;
         if reports_collected == config.swarm.total_agents * 2 {
             break; // Зібрали всі відповіді на 2 команди
