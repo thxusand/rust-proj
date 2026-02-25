@@ -44,7 +44,10 @@ impl Agent {
         mut rx: broadcast::Receiver<Message>,
         tx: mpsc::Sender<Message>,
     ) -> Result<(), AgentError> {
-        info!(agent_id = self.id, "Агент ініціалізовано та готовий до роботи");
+        info!(
+            agent_id = self.id,
+            "Агент ініціалізовано та готовий до роботи"
+        );
 
         // Слухаємо команди з broadcast каналу
         while let Ok(msg) = rx.recv().await {
@@ -53,7 +56,9 @@ impl Agent {
             // Відправляємо статус назад координатору (graceful error handling)
             let report = Message::StatusReport(self.id, self.state, self.position);
             if tx.send(report).await.is_err() {
-                return Err(AgentError::ChannelError("Втрачено зв'язок з координатором".into()));
+                return Err(AgentError::ChannelError(
+                    "Втрачено зв'язок з координатором".into(),
+                ));
             }
         }
         Ok(())
