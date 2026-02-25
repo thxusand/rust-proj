@@ -1,3 +1,4 @@
+// МОЗОК ДРОНУ
 use crate::core::{AgentError, AgentId, Message, Position, State};
 use tokio::sync::{broadcast, mpsc};
 use tracing::{info, warn};

@@ -1,3 +1,4 @@
+// ТОЧКА ВХОДУ
 mod agent;
 mod core;
 
